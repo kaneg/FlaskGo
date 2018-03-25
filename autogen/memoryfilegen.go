@@ -34,6 +34,7 @@ func main() {
 
     s := `//Auto generated file
 // +build ignore
+
 package main
 
 import "encoding/base64"
