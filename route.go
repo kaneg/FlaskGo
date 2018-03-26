@@ -36,7 +36,10 @@ func getRuleParts(rule string) (RPS, bool) {
 
 func (app *App) AddRoute(rule string, handler interface{}, methods ...string) {
 	rule = app.Prefix + rule
+	app.addRoute(rule, handler, methods...)
+}
 
+func (app *App) addRoute(rule string, handler interface{}, methods ...string) {
 	funcType := reflect.TypeOf(handler)
 	if funcType.Kind() != reflect.Func && funcType.Kind() != reflect.Struct {
 		panic("Second argument must be map function.")
@@ -79,9 +82,5 @@ func (app *App) addStaticRoute(rule string, handler StaticRouteFunc) {
 }
 
 func (app *App) Redirect(location string) func() {
-	return func() {
-		w := GetResponseWriter()
-		w.Header().Add("Location", app.Prefix+location)
-		w.WriteHeader(302)
-	}
+	return Redirect(app.Prefix+location)
 }

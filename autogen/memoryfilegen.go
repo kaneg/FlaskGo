@@ -32,8 +32,8 @@ func main() {
 
     fmt.Println("Total file:", len(fileContentMap))
 
-    s := `//Auto generated file
-// +build ignore
+    s := 
+`//Auto generated file
 
 package main
 

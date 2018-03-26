@@ -1,6 +1,7 @@
 package flaskgo
 
 import (
+	"log"
 	"html/template"
 	"net/http"
 	"regexp"
@@ -56,6 +57,7 @@ func (app *App) getFuncMap() template.FuncMap {
 
 func (app *App) Handler(w http.ResponseWriter, r *http.Request) {
 	path := r.URL.Path
+	log.Println("Request URL: ", r.URL)
 	var handled = false
 	if handler, ok := app.staticRules[path]; ok {
 		handlerStaticRule(handler, w, r)
@@ -95,6 +97,7 @@ func init() {
 }
 
 func initApp(app App) {
+	app.addRoute("/", app.Redirect("/"))
 	app.AddRoute("/static/<path:path>", staticResource)
 }
 
