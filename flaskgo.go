@@ -11,6 +11,12 @@ import (
 
 const PS = `(?P<static>[^<]*)<(?:(?P<converter>[a-zA-Z_][a-zA-Z0-9_]*)(?:\((?P<args>.*?)\))?\:)?(?P<variable>[a-zA-Z_][a-zA-Z0-9_]*)>`
 
+const PAGE_NOT_FOUND = `
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<title>404 Not Found</title>
+<h1>Not Found</h1>
+<p>The requested URL was not found on the server.  If you entered the URL manually please check your spelling and try again.</p>`
+
 var ruleRegexp *regexp.Regexp
 
 var fcp FileContentProvider = new(DefaultFileContentProvider)
@@ -78,7 +84,7 @@ func (app *App) Handler(w http.ResponseWriter, r *http.Request) {
 	}
 	if !handled {
 		w.WriteHeader(404)
-		w.Write([]byte("No handler found"))
+		w.Write([]byte(PAGE_NOT_FOUND))
 	}
 }
 
